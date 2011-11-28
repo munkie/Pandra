@@ -13,21 +13,38 @@
  */
 class PandraValidator {
 
+    /*
+     * Type defs
+     */
+    CONST TYPE_NOTEMPTY     = 'notempty';
+    CONST TYPE_ISEMPTY      = 'isempty';
+    CONST TYPE_INT          = 'int';
+    CONST TYPE_FLOAT        = 'float';
+    CONST TYPE_NUMERIC      = 'numeric';
+    CONST TYPE_STRING       = 'string';
+    CONST TYPE_BOOL         = 'bool';
+    CONST TYPE_MAXLENGTH    = 'maxlength';
+    CONST TYPE_MINLENGTH    = 'minlength';
+    CONST TYPE_ENUM         = 'enum';
+    CONST TYPE_EMAIL        = 'email';
+    CONST TYPE_URL          = 'url';
+    CONST TYPE_UUID         = 'uuid';
+
     // primitives for which there is self::check() logic
     static public $primitive = array(
-            'notempty',
-            'isempty',          // honeypot
-            'int',
-            'float',
-            'numeric',
-            'string',
-            'bool',             // PHP bool types or strings 'true', 'false', 't', 'f', '1', '0', 'y', 'n'
-            'maxlength',	// =[length]
-            'minlength',	// =[length]
-            'enum',		// =[comma,delimitered,enumerates]
-            'email',
-            'url',
-            'uuid'
+        self::TYPE_NOTEMPTY,
+        self::TYPE_ISEMPTY,          // honeypot
+        self::TYPE_INT,
+        self::TYPE_FLOAT,
+        self::TYPE_NUMERIC,
+        self::TYPE_STRING,
+        self::TYPE_BOOL,             // PHP bool types or strings 'true', 'false', 't', 'f', '1', '0', 'y', 'n'
+        self::TYPE_MAXLENGTH,	// =[length]
+        self::TYPE_MINLENGTH,	// =[length]
+        self::TYPE_ENUM,		// =[comma,delimitered,enumerates]
+        self::TYPE_EMAIL,
+        self::TYPE_URL,
+        self::TYPE_UUID
     );
 
     /**
@@ -48,7 +65,7 @@ class PandraValidator {
      */
     static public function exists($typeDef) {
         if (stripos($typeDef, '=') != 0) {
-            list($type, $args) = explode('=', $typeDef);
+            list($type, ) = explode('=', $typeDef);
         } else {
             $type = $typeDef;
         }
@@ -117,69 +134,69 @@ class PandraValidator {
 
             // check for basic validator types
             switch ($type) {
-                case 'notempty' :
+                case self::TYPE_NOTEMPTY :
                     $error = empty($value);
                     if ($error) $errorMsg[] = "Field cannot be empty";
                     break;
 
-                case 'isempty' :
+                case self::TYPE_ISEMPTY :
                 // NULL is never allowed, just empty strings
                     $error = ($value != '');
                     if ($error) $errorMsg[] = "Field must be empty";
                     break;
 
-                case 'email' :
+                case self::TYPE_EMAIL :
                     $error = !filter_var($value, FILTER_VALIDATE_EMAIL);
                     if ($error) $errorMsg[] = "Invalid email address";
                     break;
 
-                case 'url' :
+                case self::TYPE_URL :
                     $error = !filter_var($value, FILTER_VALIDATE_URL);
                     if ($error) $errorMsg[] = "Invalid URL";
                     break;
 
-                case 'float' :
+                case self::TYPE_FLOAT :
                     $error = !is_float($value);
                     if ($error) $errorMsg[] = "Field error, expected ".$type;
                     break;
-                case 'int' :
-                case 'numeric' :
+                case self::TYPE_INT :
+                case self::TYPE_NUMERIC :
                     $error = !is_numeric($value);
                     if ($error) $errorMsg[] = "Field error, expected ".$type;
                     break;
 
-                case 'string' :
+                case self::TYPE_STRING :
                     $error = !is_string($value);
                     if ($error) $errorMsg[] = "Field error, expected ".$type;
                     break;
 
-                case 'bool' :
+                case self::TYPE_BOOL :
                     $val = strtolower($value);
                     $boolVals = array('true', 'false', 't', 'f', '1', '0', 'y', 'n');
                     $error = !is_bool($value) && !(in_array($val, $boolVals));
                     if ($error) $errorMsg[] = "Field error, expected ".$type;
                     break;
 
-                case 'maxlength' :
+                case self::TYPE_MAXLENGTH :
                     if (empty($args)) throw new RuntimeException("type $type requires argument");
                     $error = (strlen($value) > $args);
                     if ($error) $errorMsg[] = "Maximum length $args exceeded";
                     break;
 
-                case 'minlength' :
+                case self::TYPE_MINLENGTH :
                     if (empty($args)) throw new RuntimeException("type $type requires argument");
                     $error = (strlen($value) < $args);
                     if ($error) $errorMsg[] = "Minimum length $args unmet";
                     break;
 
-                case 'enum' :
+                case self::TYPE_ENUM :
                     if (empty($args)) throw new RuntimeException("type $type requires argument");
                     $enums = explode(",", $args);
                     $error = (!in_array($value, $enums));
                     if ($error) $errorMsg[] = "Invalid Argument";
                     break;
 
-                case 'uuid' :
+                case self::TYPE_UUID :
                     $error = (!UUID::validUUID($value));
                     if ($error) $errorMsg[] = "Invalid UUID (UUID String expected)";
                     break;
@@ -198,4 +215,3 @@ class PandraValidator {
         return empty($errorMsg);
     }
 }
-?>
