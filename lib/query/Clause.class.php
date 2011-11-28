@@ -11,6 +11,10 @@
 
 abstract class PandraClause {
 
+    /**
+     * @param mixed $value
+     * @return bool
+     */
     public function match($value) {}
 
     public function getType() {

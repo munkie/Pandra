@@ -11,24 +11,36 @@
 
 class PandraClauseIn extends PandraClause {
 
+    /**
+     * @var array
+     */
     private $_valueIn = array();
 
-    public function __construct() {
-        $args = func_get_arg(0);
-
-        if (!is_array($args)) $args = array($args);
-        $this->_valueIn = $args;
+    /**
+     * @param $valueIn
+     */
+    public function __construct($valueIn) {
+        $this->setValueIn((array) $valueIn);
     }
 
+    /**
+     * @return array
+     */
     public function getValueIn() {
         return $this->_valueIn;
     }
 
+    /**
+     * @param array $values
+     */
     public function setValueIn(array $values) {
         $this->_valueIn = $values;
-
     }
 
+    /**
+     * @param int $value
+     * @return bool
+     */
     public function match($value) {
         return (in_array($value, $this->_valueIn));
     }

@@ -10,24 +10,39 @@
  */
 
 class PandraClauseRegex extends PandraClause {
+    /**
+     * @var string
+     */
     private $_pattern = NULL;
 
+    /**
+     * @var int
+     */
     private $_flags = NULL;
 
+    /**
+     * @var int
+     */
     private $_offset = NULL;
 
     public $matches = array();
 
-    public function __construct() {
-        $args = func_get_args();
-
-        $this->_pattern = func_get_arg(0);
-
-        if (isset($args[1])) $this->_flags = func_get_arg(1);
-        if (isset($args[2])) $this->_offset = func_get_arg(2);       
+    /**
+     * @param string $pattern
+     * @param int $flags
+     * @param int $offset
+     */
+    public function __construct($pattern, $flags = null, $offset = null) {
+        $this->_pattern = $pattern;
+        $this->_flags = $flags;
+        $this->_offset = $offset;
     }
 
+    /**
+     * @param string $value
+     * @return bool
+     */
     public function match($value) {
-        return preg_match($this->_pattern, $value, $this->matches, $this->_flags, $this->_offset);
+        return (bool) preg_match($this->_pattern, $value, $this->matches, $this->_flags, $this->_offset);
     }
 }

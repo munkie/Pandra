@@ -19,15 +19,32 @@
 
 class PandraClauseNumericRange extends PandraClause {
 
-    private $_args = array();
+    /**
+     * @var int
+     */
+    private $_from;
 
-    public function __construct() {
-        $this->_args = func_get_arg(0);
+    /**
+     * @var int
+     */
+    private $_to;
+
+    /**
+     * @param int $from
+     * @param int $to
+     */
+    public function __construct($from = null, $to = null) {
+        $this->_from = $from;
+        $this->_to = $to;
     }
 
+    /**
+     * @param int $value
+     * @return bool
+     */
     public function match($value) {
-        $fromMatch = (isset($this->_args['from'])) ? is_numeric($value) && $this->_args['from'] <= $value : is_numeric($value);
-        $toMatch = (isset($this->_args['to'])) ? is_numeric($value) && $this->_args['to'] >= $value : is_numeric($value);
+        $fromMatch = (null !== $this->_from) ? is_numeric($value) && $this->_from <= $value : is_numeric($value);
+        $toMatch = (null !== $this->_to) ? is_numeric($value) && $this->_to >= $value : is_numeric($value);
         return $fromMatch && $toMatch;
     }
 }

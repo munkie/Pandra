@@ -19,21 +19,29 @@
 
 class PandraClauseLiteral extends PandraClause {
 
+    /**
+     * @var string
+     */
     private $_arg = NULL;
 
+    /**
+     * @var bool
+     */
     private $_strict = FALSE;
 
     /**
      * @param mixed $arg value to match against
      * @param bool $strict match identical type and value (default false)
      */
-    public function __construct() {
-        $this->_arg = func_get_arg(0);
-        if (func_num_args() > 1) {
-            $this->_strict = func_get_arg(1);
-        }
+    public function __construct($arg, $strict = false) {
+        $this->_arg = $arg;
+        $this->_strict = (bool) $strict;
     }
 
+    /**
+     * @param $value
+     * @return bool
+     */
     public function match($value) {
         return $this->_strict ? 
                     $value === $this->_arg :
