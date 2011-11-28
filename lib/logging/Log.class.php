@@ -257,4 +257,3 @@ class PandraLog {
         self::logPriorityMessage(self::LOG_DEBUG, $message);
     }
 }
-?>

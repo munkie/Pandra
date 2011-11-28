@@ -85,4 +85,3 @@ class PandraLoggerSyslog implements PandraLogger {
         $this->close();
     }
 }
-?>

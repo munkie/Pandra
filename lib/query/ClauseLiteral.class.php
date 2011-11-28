@@ -40,4 +40,3 @@ class PandraClauseLiteral extends PandraClause {
                     $value == $this->_arg;
     }
 }
-?>

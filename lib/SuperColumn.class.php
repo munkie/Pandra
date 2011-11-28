@@ -310,4 +310,3 @@ class PandraSuperColumn extends PandraColumnContainer implements PandraContainer
         return parent::getName();
     }
 }
-?>

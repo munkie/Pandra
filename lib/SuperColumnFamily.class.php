@@ -252,4 +252,3 @@ class PandraSuperColumnFamily extends PandraColumnFamily implements PandraColumn
         return empty($this->errors);
     }
 }
-?>

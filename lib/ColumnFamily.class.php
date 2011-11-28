@@ -155,4 +155,3 @@ class PandraColumnFamily extends PandraColumnContainer implements PandraColumnPa
         return $ok;
     }
 }
-?>

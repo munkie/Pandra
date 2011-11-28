@@ -31,4 +31,3 @@ class PandraClauseNumericRange extends PandraClause {
         return $fromMatch && $toMatch;
     }
 }
-?>

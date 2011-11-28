@@ -31,4 +31,3 @@ class PandraClauseRegex extends PandraClause {
         return preg_match($this->_pattern, $value, $this->matches, $this->_flags, $this->_offset);
     }
 }
-?>

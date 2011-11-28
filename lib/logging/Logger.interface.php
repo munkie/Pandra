@@ -43,4 +43,3 @@ interface PandraLogger {
      */
     public function execute($priority, $message);
 }
-?>

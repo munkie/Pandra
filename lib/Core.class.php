@@ -874,4 +874,3 @@ class PandraCore {
         }
     }
 }
-?>

@@ -129,4 +129,3 @@ interface PandraColumnPathable {
     public function destroyErrors();
 
 }
-?>

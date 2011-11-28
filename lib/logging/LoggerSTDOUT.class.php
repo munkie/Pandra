@@ -49,4 +49,3 @@ class PandraLoggerSTDOUT implements PandraLogger {
         }
     }
 }
-?>

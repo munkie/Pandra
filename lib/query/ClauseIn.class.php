@@ -33,4 +33,3 @@ class PandraClauseIn extends PandraClause {
         return (in_array($value, $this->_valueIn));
     }
 }
-?>

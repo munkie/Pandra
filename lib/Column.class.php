@@ -599,4 +599,3 @@ class PandraColumn extends cassandra_Column implements PandraContainerChild, Pan
         return $this->_modified;
     }
 }
-?>

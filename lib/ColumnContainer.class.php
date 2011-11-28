@@ -912,4 +912,3 @@ abstract class PandraColumnContainer implements ArrayAccess, Iterator, Countable
         return $retArr;
     }
 }
-?>

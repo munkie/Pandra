@@ -87,4 +87,3 @@ class PandraSlicePredicate extends cassandra_SlicePredicate {
         }
     }
 }
-?>
