@@ -141,11 +141,11 @@ class PandraQuery implements ArrayAccess {
     }
 
     public function keyStart($key) {
-        $this->_start = $keys;
+        $this->_start = $key;
     }
 
     public function keyFinish($key) {
-        $this->_finish = $keys;
+        $this->_finish = $key;
     }
 
     // @todo
